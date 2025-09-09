@@ -16,6 +16,7 @@
 ### 1) Start the database (using your existing docker-compose file)
 
 ```bash
+cd server
 docker compose up -d
 ```
 
