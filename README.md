@@ -1,19 +1,9 @@
 # Messenger — Realtime DM Chat (React + tRPC + Prisma + WebSockets)
 
-A small take‑home project that implements:
-
-- Login
-- Sidebar with DM threads (create or select)
-- Realtime chat window via tRPC subscriptions
-- Postgres + Prisma for persistence
-- Dark UI with Tailwind
-
----
-
 ## Requirements
 
 - **Node.js** v18+ and **npm**
-- **Docker** & **Docker Compose** (you already have a compose file)
+- **Docker** & **Docker Compose** 
 - **Ports**
   - Backend: `4000`
   - Frontend (Vite): `5173`
@@ -52,7 +42,7 @@ cd server
 npm install
 
 # Frontend
-cd ../client
+cd messenger-app
 npm install
 ```
 
@@ -63,7 +53,7 @@ npm install
 From the **server** directory:
 
 ```bash
-cd ../server
+cd server
 
 # Apply schema to the DB (creates tables)
 npx prisma migrate dev --name init
@@ -72,20 +62,8 @@ npx prisma migrate dev --name init
 npx prisma generate
 
 # Seed demo data
-npx prisma db seed
+npm run db:seed
 ```
-
-> If Prisma asks for the seed command, add this to `server/package.json`:
->
-> ```json
-> {
->   "prisma": {
->     "seed": "ts-node prisma/seed.ts"
->   }
-> }
-> ```
->
-> (Install `ts-node` or use `tsx` if you prefer.)
 
 ---
 
@@ -138,41 +116,3 @@ Use any of the following credentials:
 - **Session identity:** Login stores the current user in `sessionStorage` so multiple tabs can act as different users concurrently.
 
 ---
-
-## Common commands
-
-```bash
-# Inspect DB in a browser UI
-npx prisma studio
-
-# View Docker logs
-docker compose logs -f db
-
-# Stop containers
-docker compose down
-```
-
----
-
-## Notes & trade-offs
-
-- Passwords are plain text for demo purposes (scope of take‑home). In real apps, hash (bcrypt) and never return them.
-- Minimal routing/auth; session identity is passed from the client to tRPC for simplicity.
-- WebSocket reconnection is kept simple; tRPC handles the basic flow.
-- Prisma models include `User`, `Thread`, and `Message`, with `@@unique([userAId, userBId])` on `Thread` to enforce one DM per pair.
-
----
-
-## Project status
-
-Core features complete:
-- Login, DM creation, list & select
-- Realtime messaging (tRPC subscriptions)
-- Prisma models and migrations
-- Dark UI with Tailwind
-
-Future enhancements (out of scope):
-- Password hashing & tokens/cookies
-- Toasted errors / optimistic UI
-- Infinite scroll for messages
-- Tests & CI
