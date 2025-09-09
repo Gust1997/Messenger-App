@@ -31,7 +31,7 @@ export default function LoginPage() {
             onSubmit={handleSubmit}
           >
             <h1 className="text-xl font-semibold text-center text-slate-100">
-              Messages Login
+              Messenger Login
             </h1>
       
             <div>
